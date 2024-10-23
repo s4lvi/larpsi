@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { login } = useContext(AuthContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +24,7 @@ const Signup = () => {
     try {
       const res = await axios.post("/api/auth/signup", formData);
       login(res.data.token);
-      history.push("/");
+      navigate("/");
     } catch (err) {
       console.error(err.response.data);
       alert(err.response.data.msg || "Signup failed");
