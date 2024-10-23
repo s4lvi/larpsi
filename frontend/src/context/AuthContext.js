@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
     setAuthToken(token);
     setUser(jwtDecode(token).user);
-    console.log(jwtDecode(token).user);
   };
 
   const logout = () => {
@@ -27,7 +26,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (authToken) {
       const decoded = jwtDecode(authToken);
-      setUser(decoded);
+      setUser(decoded.user);
     }
   }, [authToken]);
 
