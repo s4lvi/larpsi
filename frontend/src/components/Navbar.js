@@ -1,10 +1,10 @@
+// Navbar.jsx
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -17,8 +17,8 @@ const Navbar = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
+          data-bs-toggle="collapse" // Updated
+          data-bs-target="#navbarNav" // Updated
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -44,24 +44,27 @@ const Navbar = () => {
                   href="#!"
                   id="adminDropdown"
                   role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  data-bs-toggle="dropdown" // Updated
+                  aria-expanded="false" // Bootstrap 5 uses aria-expanded without "aria-haspopup"
                 >
                   Admin
                 </a>
-                <div className="dropdown-menu" aria-labelledby="adminDropdown">
-                  <NavLink className="dropdown-item" to="/admin/events/new">
-                    Add Event
-                  </NavLink>
+                <ul className="dropdown-menu" aria-labelledby="adminDropdown">
+                  <li>
+                    <NavLink className="dropdown-item" to="/admin/events/new">
+                      Add Event
+                    </NavLink>
+                  </li>
                   {/* Future links for updating/deleting events can be added here */}
-                </div>
+                </ul>
               </li>
             )}
           </ul>
 
           {/* Right Side Links */}
-          <ul className="navbar-nav ml-auto">
+          <ul className="navbar-nav ms-auto">
+            {" "}
+            {/* Changed ml-auto to ms-auto for Bootstrap 5 */}
             {!user ? (
               <>
                 <li className="nav-item">

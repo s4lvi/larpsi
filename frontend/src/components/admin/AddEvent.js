@@ -21,7 +21,7 @@ const AddEvent = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/admin/events", formData, {
+      const res = await axios.post("/api/events", formData, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       alert("Event added successfully!");

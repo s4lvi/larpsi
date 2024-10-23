@@ -28,7 +28,7 @@ const EventDetail = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
-        await axios.delete(`/api/admin/events/${eventId}`, {
+        await axios.delete(`/api/events/${eventId}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         alert("Event deleted successfully!");
@@ -88,6 +88,14 @@ const EventDetail = () => {
       </button>
 
       {/* Delete Button for Admins */}
+      {user && user.isAdmin && (
+        <button
+          onClick={() => navigate(`/admin/events/${eventId}/edit`)}
+          className="btn btn-info"
+        >
+          Edit Event
+        </button>
+      )}
       {user && user.isAdmin && (
         <button onClick={handleDelete} className="btn btn-danger">
           Delete Event

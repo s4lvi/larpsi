@@ -94,6 +94,12 @@ const UpdateEvent = () => {
         <button type="submit" className="btn btn-primary mt-3">
           Update Event
         </button>
+        <button
+          onClick={() => navigate("/events")}
+          className="btn btn-secondary mt-3"
+        >
+          Back
+        </button>
       </form>
     </div>
   );

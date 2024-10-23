@@ -1,0 +1,118 @@
+/* frontend/src/components/LandingPage.css */
+
+/* 1. Landing Page Background */
+.landing-page {
+    background-image: url('../../public/images/bg1.jpg'); /* Ensure this image exists in the public/images directory */
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Full viewport height */
+    position: relative;
+    color: #ffffff; /* White text for contrast */
+  }
+  
+  /* 2. Overlay for Text Readability */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 3. Content Positioning */
+  .content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    padding: 0 1rem;
+  }
+  
+  /* 4. Title Styling */
+  .title {
+    font-size:3rem;
+    margin-bottom: 1rem;
+    font-family: 'Metamorphous', cursive; 
+    background-color: black;
+    padding: 1rem;
+  }
+
+  .subtitle {
+
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Metamorphous', cursive; 
+  }
+  
+  /* 5. Description Styling */
+  .description {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* 6. Events List Styling */
+  .events-list {
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #343a40;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .events-list .list-group-item {
+    background-color: transparent;
+    border: none;
+    color: #343a40;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .events-list .list-group-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateX(5px);
+  }
+  
+  /* 7. Social Media Section */
+  .social-media {
+    margin-top: 2rem;
+  }
+  
+  .social-media h3 {
+    margin-bottom: 1rem;
+    font-family: 'Jacquarda Bastarda 9', cursive; /* Apply custom font */
+  }
+  
+  .social-media .icons a {
+    color: #ffffff;
+    font-size: 2rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .social-media .icons a:hover {
+    color: #ffc107; /* Highlight color on hover */
+    transform: scale(1.2);
+  }
+  
+  /* 8. Responsive Adjustments */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 2.5rem;
+    }
+  
+    .description {
+      font-size: 1.2rem;
+    }
+  
+    .events-list {
+      max-width: 90%;
+      padding: 0.5rem;
+    }
+  
+    .social-media .icons a {
+      font-size: 1.5rem;
+      margin: 0 0.3rem;
+    }
+  }
+  

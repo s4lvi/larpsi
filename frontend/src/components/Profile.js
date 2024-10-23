@@ -5,6 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 const Profile = () => {
   const { authToken } = useContext(AuthContext);
   const [profile, setProfile] = useState({ bio: "" });
+  const [formData, setFormData] = useState(profile || {});
+
+  const { bio } = formData;
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -13,6 +16,7 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         setProfile(res.data.profile);
+        setFormData(profile);
       } catch (err) {
         console.error(err.response.data);
       }
@@ -20,12 +24,9 @@ const Profile = () => {
     fetchProfile();
   }, [authToken]);
 
-  const [formData, setFormData] = useState({
-    bio: profile.bio || "",
-    // Add more fields as needed
-  });
-
-  const { bio } = formData;
+  useEffect(() => {
+    setFormData(profile);
+  }, [profile]);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
