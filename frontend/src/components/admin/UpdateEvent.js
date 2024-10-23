@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateEvent = () => {
   const { authToken } = useContext(AuthContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { eventId } = useParams();
 
   const [formData, setFormData] = useState({
@@ -33,7 +33,7 @@ const UpdateEvent = () => {
     } catch (err) {
       console.error("Error fetching event:", err.response?.data || err.message);
       alert(err.response?.data?.msg || "Failed to fetch event.");
-      history.push("/events");
+      navigate("/events");
     }
   };
 
@@ -47,7 +47,7 @@ const UpdateEvent = () => {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       alert("Event updated successfully!");
-      history.push(`/events/${eventId}`); // Redirect to event detail
+      navigate(`/events/${eventId}`); // Redirect to event detail
     } catch (err) {
       console.error("Error updating event:", err.response?.data || err.message);
       alert(err.response?.data?.msg || "Failed to update event.");

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddEvent = () => {
   const { authToken } = useContext(AuthContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -25,7 +25,7 @@ const AddEvent = () => {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       alert("Event added successfully!");
-      history.push("/events"); // Redirect to events list
+      navigate("/events"); // Redirect to events list
     } catch (err) {
       console.error("Error adding event:", err.response?.data || err.message);
       alert(err.response?.data?.msg || "Failed to add event.");
