@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const EventsList = () => {
   const [events, setEvents] = useState([]);
-  const { authToken } = useContext(AuthContext);
+  const { authToken, user } = useContext(AuthContext);
 
   useEffect(() => {
     fetchEvents();

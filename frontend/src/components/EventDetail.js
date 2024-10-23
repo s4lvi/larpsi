@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const EventDetail = () => {
   const { eventId } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);

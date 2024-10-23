@@ -11,6 +11,7 @@ import EventDetail from "./components/EventDetail";
 import AddEvent from "./components/admin/AddEvent";
 import UpdateEvent from "./components/admin/UpdateEvent";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
