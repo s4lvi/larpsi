@@ -1,7 +1,8 @@
+// frontend/src/App.js
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
-import Navbar from "./components//Navbar";
+import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -16,13 +17,20 @@ function App() {
     <AuthProvider>
       <Router>
         <Navbar />
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <Route path="/events/:eventId" component={Event} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/events/:eventId" element={<Event />} />
+        </Routes>
       </Router>
     </AuthProvider>
   );
