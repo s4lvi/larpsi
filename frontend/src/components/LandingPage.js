@@ -43,32 +43,18 @@ const LandingPage = () => {
             <h3>Follow Us</h3>
             <div className="icons">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61566898743610"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaFacebookF />
               </a>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTwitter />
-              </a>
-              <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/larp_inthepark/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaInstagram />
-              </a>
-              <a
-                href="https://discord.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaDiscord />
               </a>
             </div>
           </div>
