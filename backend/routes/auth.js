@@ -28,12 +28,8 @@ router.post("/signup", async (req, res) => {
 
     await user.save();
 
-    const payload = {
-      id: user.id,
-    };
-
     jwt.sign(
-      payload,
+      user,
       process.env.JWT_SECRET,
       { expiresIn: "7d" },
       (err, token) => {
@@ -65,12 +61,8 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ msg: "Invalid Credentials" });
     }
 
-    const payload = {
-      user,
-    };
-
     jwt.sign(
-      payload,
+      user,
       process.env.JWT_SECRET,
       { expiresIn: "7d" },
       (err, token) => {
