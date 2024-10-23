@@ -11,6 +11,12 @@
       "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
     },
     "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^6.0.0",
+        "bcryptjs": "^2.4.3",
+        "jsonwebtoken": "^8.5.1",
+        "dotenv": "^10.0.0",
+        "cors": "^2.8.5"
     },
     "devDependencies": {
       "concurrently": "^6.0.0"
