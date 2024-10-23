@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
     setAuthToken(token);
     setUser(jwtDecode(token));
+    console.log(jwtDecode(token));
   };
 
   const logout = () => {

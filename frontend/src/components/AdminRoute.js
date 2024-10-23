@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const AdminRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
-
+  console.log("adminroute", user);
   if (!user) {
     return <Navigate to="/login" />;
   }
