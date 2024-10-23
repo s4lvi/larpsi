@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { AuthContext } from "../../../frontend-old/src/context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
   const { authToken } = useContext(AuthContext);
