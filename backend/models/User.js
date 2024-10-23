@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false, // Default to regular user
+  },
   profile: {
     bio: { type: String, default: "" },
     // Add more profile fields as needed
