@@ -5,13 +5,16 @@ import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import Profile from "./components/Profile";
+import Profile from "./components/Account";
 import EventsList from "./components/EventsList";
 import EventDetail from "./components/EventDetail";
 import AddEvent from "./components/admin/AddEvent";
 import UpdateEvent from "./components/admin/UpdateEvent";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
+import ProfileDetail from "./components/ProfileDetail";
+import ProfilesList from "./components/ProfilesList";
+import Account from "./components/Account";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -26,11 +29,31 @@ function App() {
           <Route path="/events/:eventId" element={<EventDetail />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+
+          {/* Profiles List */}
           <Route
-            path="/profile"
+            path="/profiles"
             element={
               <PrivateRoute>
-                <Profile />
+                <ProfilesList />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Individual Profile */}
+          <Route
+            path="/profiles/:userId"
+            element={
+              <PrivateRoute>
+                <ProfileDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <PrivateRoute>
+                <Account />
               </PrivateRoute>
             }
           />

@@ -26,6 +26,11 @@ const UserSchema = new mongoose.Schema({
   },
   profile: {
     bio: { type: String, default: "" },
+    characterName: { type: String, default: "" },
+    class: { type: String, default: "" },
+    race: { type: String, default: "" },
+    money: { type: Number, default: 0 },
+    gear: { type: [String], default: [] }, // Assuming gear is a list of strings
     // Add more profile fields as needed
   },
   date: {

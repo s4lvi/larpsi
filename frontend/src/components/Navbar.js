@@ -35,6 +35,11 @@ const Navbar = () => {
                 Events
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink exact className="nav-link" to="/profiles">
+                Characters
+              </NavLink>
+            </li>
 
             {/* Admin Links */}
             {user && user.isAdmin && (
@@ -81,8 +86,8 @@ const Navbar = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/profile">
-                    Profile
+                  <NavLink className="nav-link" to="/account">
+                    Account
                   </NavLink>
                 </li>
                 <li className="nav-item">

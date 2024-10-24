@@ -18,8 +18,10 @@ app.use(cors());
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/profile", require("./routes/profile"));
+app.use("/api/profiles", require("./routes/profiles"));
 app.use("/api/events", require("./routes/events"));
 app.use("/api/rsvp", require("./routes/rsvp"));
+app.use("/api/account", require("./routes/account"));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
