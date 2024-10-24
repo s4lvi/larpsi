@@ -46,6 +46,19 @@ router.post("/:eventId", async (req, res) => {
   }
 });
 
+// @route   GET /api/rsvp/:eventId/count
+// @desc    Get count of all RSVPs for an event
+// @access  Public
+router.get("/:eventId/count", async (req, res) => {
+  try {
+    const count = await RSVP.find({ event: req.params.eventId });
+    res.json(count.length);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 // @route   GET /api/rsvp/:eventId
 // @desc    Get all RSVPs for an event
 // @access  Private (Assuming only admins can view RSVPs)

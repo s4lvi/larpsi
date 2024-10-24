@@ -8,10 +8,12 @@ const EventDetail = () => {
   const { user, authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
+  const [count, setCount] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchEvent();
+    fetchRSVPCount();
     // eslint-disable-next-line
   }, []);
 
@@ -25,6 +27,19 @@ const EventDetail = () => {
       setLoading(false);
     }
   };
+
+  const fetchRSVPCount = async () => {
+    try {
+      const res = await axios.get(`/api/rsvp/${eventId}/count`);
+      setCount(res.data);
+    } catch (err) {
+      console.error(
+        "Error fetching rsvp count:",
+        err.response?.data || err.message
+      );
+    }
+  };
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
@@ -83,6 +98,7 @@ const EventDetail = () => {
       <p>
         <strong>Description:</strong> {event.description}
       </p>
+      {count && <h6>{count} people have already RSVP'd to this event</h6>}
       <button onClick={handleRSVP} className="btn btn-success mr-2">
         RSVP
       </button>

@@ -10,11 +10,13 @@ const User = require("../models/User");
 router.get("/", auth, async (req, res) => {
   try {
     const users = await User.find().select("username profile.characterName");
-    const profiles = users.map((user) => ({
-      userId: user._id,
-      username: user.username,
-      characterName: user.profile.characterName,
-    }));
+    const profiles = users
+      .map((user) => ({
+        userId: user._id,
+        username: user.username,
+        characterName: user.profile.characterName,
+      }))
+      .filter((user) => user.characterName);
     res.json(profiles);
   } catch (err) {
     console.error(err.message);
