@@ -23,9 +23,10 @@ router.post("/:eventId", async (req, res) => {
       // If user is logged in
       const token = req.header("Authorization").split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log("decoded", decoded);
       const user = await User.findById(decoded.id);
       if (user) {
-        rsvpData.user = user.id;
+        rsvpData.user = user._id;
       }
     } else {
       // If not logged in, require name and email
