@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const RSVP = require("../models/RSVP");
 const Event = require("../models/Event");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 // @route   POST /api/rsvp/:eventId
 // @desc    RSVP to an event
