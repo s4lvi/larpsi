@@ -22,7 +22,7 @@ router.post("/:eventId", async (req, res) => {
     if (req.headers.authorization) {
       // If user is logged in
       const token = req.header("Authorization").split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET).user;
       console.log("decoded", decoded);
       const user = await User.findById(decoded.id);
       if (user) {
