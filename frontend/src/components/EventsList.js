@@ -1,10 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-
 const EventsList = () => {
-  const [events, setEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
   const { authToken, user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -14,7 +10,13 @@ const EventsList = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get("/api/events");
-      setEvents(res.data);
+      const now = new Date();
+
+      const upcoming = res.data.filter((event) => new Date(event.date) > now);
+      const past = res.data.filter((event) => new Date(event.date) <= now);
+
+      setUpcomingEvents(upcoming);
+      setPastEvents(past);
     } catch (err) {
       console.error(
         "Error fetching events:",
@@ -26,7 +28,6 @@ const EventsList = () => {
   const handleRSVP = async (eventId) => {
     try {
       if (authToken) {
-        // If user is logged in, send authenticated RSVP
         await axios.post(
           `/api/rsvp/${eventId}`,
           {},
@@ -35,7 +36,6 @@ const EventsList = () => {
           }
         );
       } else {
-        // If not logged in, prompt for name and email
         const name = prompt("Enter your name:");
         const email = prompt("Enter your email:");
         if (name && email) {
@@ -54,11 +54,11 @@ const EventsList = () => {
   return (
     <div className="container mt-5">
       <h2>Upcoming Events</h2>
-      {events.length === 0 ? (
-        <p>No events available.</p>
+      {upcomingEvents.length === 0 ? (
+        <p>No upcoming events available.</p>
       ) : (
         <div className="list-group">
-          {events.map((event) => (
+          {upcomingEvents.map((event) => (
             <div
               key={event._id}
               className="list-group-item flex-column align-items-start"
@@ -82,6 +82,32 @@ const EventsList = () => {
                   RSVP
                 </button>
               </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h2 className="mt-5">Past Events</h2>
+      {pastEvents.length === 0 ? (
+        <p>No past events available.</p>
+      ) : (
+        <div className="list-group">
+          {pastEvents.map((event) => (
+            <div
+              key={event._id}
+              className="list-group-item flex-column align-items-start"
+            >
+              <div className="d-flex w-100 justify-content-between">
+                <h5 className="mb-1">{event.title}</h5>
+                <small>{new Date(event.date).toLocaleString()}</small>
+              </div>
+              <p className="mb-1">{event.description.substring(0, 100)}...</p>
+              <Link
+                to={`/events/${event._id}`}
+                className="btn btn-primary btn-sm mt-2"
+              >
+                View Details
+              </Link>
             </div>
           ))}
         </div>

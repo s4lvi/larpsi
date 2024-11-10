@@ -1,53 +1,91 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const RSVP = require("../models/RSVP");
 const Event = require("../models/Event");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
-// @route   GET /api/events
-// @desc    Get all events
-// @access  Public
-router.get("/", async (req, res) => {
-  try {
-    const events = await Event.find().sort({ date: -1 });
-    res.json(events);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+// @route   POST /api/rsvp/:eventId
+// @desc    RSVP to an event
+// @access  Public (with optional authentication)
+router.post("/:eventId", async (req, res) => {
+  const { eventId } = req.params;
+  const { name, email } = req.body;
 
-// @route   GET /api/events/:id
-// @desc    Get single event by ID
-// @access  Public
-router.get("/:id", async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(eventId);
     if (!event) return res.status(404).json({ msg: "Event not found" });
-    res.json(event);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Event not found" });
+
+    let rsvpData = { event: eventId };
+    let userId;
+
+    if (req.headers.authorization) {
+      // If user is logged in
+      const token = req.header("Authorization").split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET).user;
+      userId = decoded._id;
+
+      const user = await User.findById(userId);
+      if (user) {
+        rsvpData.user = user._id;
+      }
+    } else {
+      // If not logged in, require name and email
+      if (!name || !email) {
+        return res
+          .status(400)
+          .json({ msg: "Name and Email are required for RSVP" });
+      }
+      rsvpData.name = name;
+      rsvpData.email = email;
     }
-    res.status(500).send("Server error");
-  }
-});
 
-// @route   POST /api/events
-// @desc    Create an event
-// @access  Private (Assuming only admins can create events)
-router.post("/", auth, async (req, res) => {
-  const { title, description, date } = req.body;
-
-  try {
-    const newEvent = new Event({
-      title,
-      description,
-      date,
+    // Check if RSVP already exists for this event by user or email
+    const existingRSVP = await RSVP.findOne({
+      event: eventId,
+      $or: [{ user: userId }, { email: email }],
     });
 
-    const event = await newEvent.save();
-    res.json(event);
+    if (existingRSVP) {
+      return res
+        .status(400)
+        .json({ msg: "You have already RSVPed for this event" });
+    }
+
+    const newRSVP = new RSVP(rsvpData);
+    await newRSVP.save();
+
+    res.json({ msg: "RSVP successful" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   GET /api/rsvp/:eventId/count
+// @desc    Get count of all RSVPs for an event
+// @access  Public
+router.get("/:eventId/count", async (req, res) => {
+  try {
+    const count = await RSVP.find({ event: req.params.eventId });
+    res.json(count.length);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   GET /api/rsvp/:eventId
+// @desc    Get all RSVPs for an event
+// @access  Private (Assuming only admins can view RSVPs)
+router.get("/:eventId", auth, async (req, res) => {
+  try {
+    const rsvps = await RSVP.find({ event: req.params.eventId }).populate(
+      "user",
+      ["name", "email"]
+    );
+    res.json(rsvps);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

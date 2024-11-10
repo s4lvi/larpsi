@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { FaFacebookF, FaTwitter, FaInstagram, FaDiscord } from "react-icons/fa";
-import "./LandingPage.css"; // Create a separate CSS file for LandingPage-specific styles
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import "./LandingPage.css";
 
 const LandingPage = () => {
   const [events, setEvents] = useState([]);
@@ -11,13 +11,17 @@ const LandingPage = () => {
   useEffect(() => {
     axios
       .get("/api/events")
-      .then((res) => setEvents(res.data))
+      .then((res) => {
+        const upcomingEvents = res.data.filter(
+          (event) => new Date(event.date) > new Date()
+        );
+        setEvents(upcomingEvents);
+      })
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <div className="landing-page">
-      {/* Overlay for better text visibility */}
       <div className="overlay">
         <div className="content">
           <h1 className="title">

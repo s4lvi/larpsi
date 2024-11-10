@@ -14,8 +14,6 @@ const adminAuth = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.user._id).select("-password");
-
-    console.log(decoded);
     if (!user) {
       return res
         .status(401)
