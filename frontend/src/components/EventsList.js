@@ -1,3 +1,8 @@
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+
 const EventsList = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]);
