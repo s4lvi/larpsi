@@ -29,18 +29,22 @@ const LandingPage = () => {
           </h1>
           <h2 className="subtitle">Ypsilanti's own LARP group</h2>
           <p className="description">Check out our upcoming events below:</p>
-          <div className="list-group events-list">
-            {events.map((event) => (
-              <Link
-                key={event._id}
-                to={`/events/${event._id}`}
-                className="list-group-item list-group-item-action"
-              >
-                <h5>{event.title}</h5>
-                <p>{new Date(event.date).toLocaleString()}</p>
-              </Link>
-            ))}
-          </div>
+          {events.length > 0 ? (
+            <div className="list-group events-list">
+              {events.map((event) => (
+                <Link
+                  key={event._id}
+                  to={`/events/${event._id}`}
+                  className="list-group-item list-group-item-action"
+                >
+                  <h5>{event.title}</h5>
+                  <p>{new Date(event.date).toLocaleString()}</p>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div>{`Alas, there be none :'(`}</div>
+          )}
 
           {/* Social Media Links */}
           <div className="social-media">
