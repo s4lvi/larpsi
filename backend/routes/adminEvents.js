@@ -30,6 +30,7 @@ router.post("/events", adminAuth, async (req, res) => {
 router.put("/events/:id", adminAuth, async (req, res) => {
   const { title, description, date } = req.body;
 
+  console.log(req);
   // Build event object
   const eventFields = {};
   if (title) eventFields.title = title;
@@ -37,7 +38,6 @@ router.put("/events/:id", adminAuth, async (req, res) => {
   if (date) eventFields.date = date;
 
   try {
-    console.log(req);
     let event = await Event.findById(req.params.id);
 
     if (!event) return res.status(404).json({ msg: "Event not found" });
