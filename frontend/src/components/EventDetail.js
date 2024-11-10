@@ -10,6 +10,7 @@ const EventDetail = () => {
   const [event, setEvent] = useState(null);
   const [count, setCount] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isPastEvent, setIsPastEvent] = useState(true);
 
   useEffect(() => {
     fetchEvent();
@@ -21,6 +22,7 @@ const EventDetail = () => {
     try {
       const res = await axios.get(`/api/events/${eventId}`);
       setEvent(res.data);
+      setIsPastEvent(new Date(res.data.date) < new Date());
       setLoading(false);
     } catch (err) {
       console.error("Error fetching event:", err.response?.data || err.message);
@@ -99,9 +101,11 @@ const EventDetail = () => {
         <strong>Description:</strong> {event.description}
       </p>
       {count && <h6>{count} people have already RSVP'd to this event</h6>}
-      <button onClick={handleRSVP} className="btn btn-success mr-2">
-        RSVP
-      </button>
+      {!isPastEvent && (
+        <button onClick={handleRSVP} className="btn btn-success mr-2">
+          RSVP
+        </button>
+      )}
 
       {/* Delete Button for Admins */}
       {user && user.isAdmin && (

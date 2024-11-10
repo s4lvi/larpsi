@@ -16,7 +16,6 @@ const EventsList = () => {
     try {
       const res = await axios.get("/api/events");
       const now = new Date();
-      console.log(res.data);
       const upcoming = res.data.filter((event) => new Date(event.date) > now);
       const past = res.data.filter((event) => new Date(event.date) <= now);
 
