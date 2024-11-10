@@ -43,7 +43,7 @@ const LandingPage = () => {
               ))}
             </div>
           ) : (
-            <div>{`Alas, there be none :'(`}</div>
+            <div className="list-group events-list">{`Alas, there be none :'(`}</div>
           )}
 
           {/* Social Media Links */}
