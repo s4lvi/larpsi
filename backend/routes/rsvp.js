@@ -18,12 +18,15 @@ router.post("/:eventId", async (req, res) => {
     if (!event) return res.status(404).json({ msg: "Event not found" });
 
     let rsvpData = { event: eventId };
+    let userId;
 
     if (req.headers.authorization) {
       // If user is logged in
       const token = req.header("Authorization").split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET).user;
-      const user = await User.findById(decoded._id);
+      userId = decoded._id;
+
+      const user = await User.findById(userId);
       if (user) {
         rsvpData.user = user._id;
       }
@@ -36,6 +39,18 @@ router.post("/:eventId", async (req, res) => {
       }
       rsvpData.name = name;
       rsvpData.email = email;
+    }
+
+    // Check if RSVP already exists for this event by user or email
+    const existingRSVP = await RSVP.findOne({
+      event: eventId,
+      $or: [{ user: userId }, { email: email }],
+    });
+
+    if (existingRSVP) {
+      return res
+        .status(400)
+        .json({ msg: "You have already RSVPed for this event" });
     }
 
     const newRSVP = new RSVP(rsvpData);
