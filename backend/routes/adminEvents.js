@@ -37,6 +37,7 @@ router.put("/events/:id", adminAuth, async (req, res) => {
   if (date) eventFields.date = date;
 
   try {
+    console.log(req);
     let event = await Event.findById(req.params.id);
 
     if (!event) return res.status(404).json({ msg: "Event not found" });

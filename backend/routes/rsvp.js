@@ -24,7 +24,7 @@ router.post("/:eventId", async (req, res) => {
       const token = req.header("Authorization").split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET).user;
       console.log("decoded", decoded);
-      const user = await User.findById(decoded.id);
+      const user = await User.findById(decoded._id);
       if (user) {
         rsvpData.user = user._id;
       }
