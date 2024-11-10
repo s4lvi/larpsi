@@ -22,6 +22,7 @@ const EventDetail = () => {
     try {
       const res = await axios.get(`/api/events/${eventId}`);
       setEvent(res.data);
+      console.log(res.data);
       setIsPastEvent(new Date(res.data.date) < new Date());
       setLoading(false);
     } catch (err) {
