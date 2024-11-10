@@ -96,7 +96,10 @@ const EventDetail = () => {
     <div className="container mt-5">
       <h2>{event.title}</h2>
       <p>
-        <strong>Date:</strong> {new Date(event.date).toLocaleString()}
+        <strong>Date:</strong>{" "}
+        {new Date(event.date).toLocaleString("en-US", {
+          timeZone: "America/New_York",
+        })}
       </p>
       <p>
         <strong>Description:</strong> {event.description}
