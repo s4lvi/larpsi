@@ -100,7 +100,7 @@ const EventDetail = () => {
       <p>
         <strong>Description:</strong> {event.description}
       </p>
-      {count && <h6>{count} people have already RSVP'd to this event</h6>}
+      {count < 0 && <h6>{count} people have already RSVP'd to this event</h6>}
       {!isPastEvent && (
         <button onClick={handleRSVP} className="btn btn-success mr-2">
           RSVP
